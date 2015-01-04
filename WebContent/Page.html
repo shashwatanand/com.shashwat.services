@@ -1,0 +1,58 @@
+
+
+<html>
+
+<head>
+	<title>Customer Example</title>
+	<!--<script src='API.js'></script>-->
+	<script src='Helpers.js'></script>
+	<script type='text/javascript' src='jquery.min.js'></script>
+	
+	<script>
+	//Disables caching of ajax calls when the html document loads.
+	$(document).ready(function(){
+		$.ajaxSetup({ cache: false });
+		jQuery.support.cors = true;
+	});
+	</script>
+	
+</head>
+
+<body>
+	<div>
+		<h1>Synchronous Calls</h1>
+		<p>These calls won't return until the response is received from the server.</p>
+		<p>Since javascript runs on the UI thread this means that the rest of the browser can't be interacted with until the response is received.</p>
+		<h2>getAllDtcResults</h2>
+		<p>This function takes around 10 seconds to run. Due to being synced, this will lock the UI.</p>
+		<input type="button" onclick="onClick_getAllDtcResultsSync()" value="getAllDtcResults">
+		<h3>Output:</h3>
+		<p>Return value: <span id="getAllDtcResultsSyncOutput"></span></p>
+		<h2>getConnectedVci</h2>
+		<p>This will also lock however it returns as soon as the server has finished with the request. Around <50ms</p>
+		<input type="button" onclick="onClick_getConnectedVciSync()" value="getConnectedVci">
+		<h3>Output:</h3>
+		<p>Return value: <span id="getConnectedVciSyncOutput"></span></p>
+	</div>
+	
+	<div>
+		<h1>Asynchronous Calls</h1>
+		<p>These calls will return immediately after the request is sent.</p>
+		<p>This means that any information that the asynchronous call receives cannot be returned in the function it was called in.<p>
+		<p>However this no longer locks the UI.</p>
+		<h2>getAllDtcResults</h2>
+		<p>This function takes around 10 seconds to run. Due to being asynced and utilising promises there is no locking of the UI.</p>
+		<input type="button" onclick="onClick_getAllDtcResults()" value="getAllDtcResults">
+		<h3>Output:</h3>
+		<p>Result: <span id="getAllDtcResultsOutput"></span></p>
+		<h2>getConnectedVci</h2>
+		<p>This will also not lock it utilises the promise as soon as the server has finished with the request. Around <50ms</p>
+		<input type="button" onclick="onClick_getConnectedVci()" value="getConnectedVci">
+		<h3>Output:</h3>
+		<p>Result: <span id="getConnectedVciOutput"></span></p>
+	</div>
+
+</body>
+
+
+</html>
